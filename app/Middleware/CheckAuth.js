@@ -10,9 +10,13 @@ class CheckAuth {
      * @param {Function} next
      */
     async handle({ response, auth }, next) {
-        if (!(await auth.check())) response.route("login.create");
-
-        await next();
+        try {
+            if (await auth.check()) {
+                await next();
+            }
+        } catch (error) {
+            return response.route("login.create");
+        }
     }
 }
 

@@ -10,9 +10,15 @@ class CheckUnauth {
      * @param {Function} next
      */
     async handle({ response, auth }, next) {
-        if (await auth.check()) response.route("dashboard.index");
-
-        await next();
+        try {
+            if (await auth.check()) {
+                return response.route("dashboard.index");
+            } else {
+                await next();
+            }
+        } catch (error) {
+            await next();
+        }
     }
 }
 

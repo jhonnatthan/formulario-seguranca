@@ -24,9 +24,9 @@ Route.group("home", () => {
 
     Route.get("/register", "RegisterController.create").as("register.create");
     Route.post("/register", "RegisterController.store").as("register.store");
-}).middleware("guest");
+}).middleware("checkUnauth");
 
 Route.group("auth", () => {
     Route.get("/logout", "LoginController.destroy").as("login.destroy");
     Route.get("/dashboard", "DashboardController.index").as("dashboard.index");
-}).middleware("auth");
+}).middleware("checkAuth");

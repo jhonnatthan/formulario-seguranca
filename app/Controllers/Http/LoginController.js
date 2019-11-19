@@ -3,14 +3,20 @@
 const User = use("App/Models/User");
 
 class LoginController {
-    async create({ view }) {
+    async create({ view, session }) {
         const users = await User.all();
-        return view.render("auth/login", { users: users.rows });
+        const error = session.pull("error");
+        return view.render("auth/login", { users: users.rows, error });
     }
-    async store({ request, response, auth }) {
+    async store({ request, response, auth, session }) {
         const data = request.only(["username", "password"]);
-        await auth.attempt(data.username, data.password);
-        return response.route("dashboard.index");
+        try {
+            await auth.attempt(data.username, data.password);
+            return response.route("dashboard.index");
+        } catch (error) {
+            session.put("error", "Login e/ou senha incorretos!");
+            return response.route("login.create");
+        }
     }
     async destroy({ response, auth }) {
         await auth.logout();
