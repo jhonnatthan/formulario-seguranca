@@ -7,6 +7,7 @@
         <title>Haskea não po</title>
         {{style('style')}}
         {{style('styles')}}
+        {{ recaptcha.script | safe }}
     </head>
     <body>
         <main class="container">
@@ -30,6 +31,8 @@
                         <label class="font-weight-bold" for="inputPassword">Password</label>
                         <input type="password" name="password" class="form-control" id="inputPassword">
                     </div>
+
+                    {{ recaptcha.field | safe }}
 
                     <button type="submit" class="btn btn-primary mb-2">Criar conta</button>
                     <a href="{{route('login.create')}}" class="btn btn-info mb-2">entrar</a>
