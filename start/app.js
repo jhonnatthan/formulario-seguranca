@@ -19,7 +19,7 @@ const providers = [
   '@adonisjs/shield/providers/ShieldProvider',
   '@adonisjs/session/providers/SessionProvider',
   '@adonisjs/auth/providers/AuthProvider',
-  'adonis-recaptcha/providers/RecaptchaProvider'
+  'adonis-recaptcha2/providers/RecaptchaProvider'
 ]
 
 /*
@@ -47,9 +47,7 @@ const aceProviders = [
 |   { Route: 'Adonis/Src/Route' }
 |
 */
-const aliases = {
-    Recaptcha: 'Adonis/Addons/Recaptcha'
-}
+const aliases = {}
 
 /*
 |--------------------------------------------------------------------------

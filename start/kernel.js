@@ -42,7 +42,6 @@ const namedMiddleware = {
     guest: "Adonis/Middleware/AllowGuestOnly",
     checkAuth: "App/Middleware/CheckAuth",
     checkUnauth: "App/Middleware/CheckUnauth",
-    recaptcha: 'Adonis/Middleware/Recaptcha'
 };
 
 /*
