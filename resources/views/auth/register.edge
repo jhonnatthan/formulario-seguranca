@@ -7,7 +7,7 @@
         <title>Haskea não po</title>
         {{style('style')}}
         {{style('styles')}}
-        {{ recaptcha.script | safe }}
+        <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     </head>
     <body>
         <main class="container">
@@ -32,7 +32,7 @@
                         <input type="password" name="password" class="form-control" id="inputPassword">
                     </div>
 
-                    {{ recaptcha.field | safe }}
+                    <div class="g-recaptcha" data-sitekey="{{ env('RECAPTCHA_SITE_KEY') }}"></div>
 
                     <button type="submit" class="btn btn-primary mb-2">Criar conta</button>
                     <a href="{{route('login.create')}}" class="btn btn-info mb-2">entrar</a>
