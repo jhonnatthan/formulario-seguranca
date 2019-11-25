@@ -44,5 +44,5 @@ module.exports = {
    | Enable if you need use recaptcha in Views
    |
    */
-  client: true
+  client: false
 }
