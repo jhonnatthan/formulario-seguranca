@@ -27,6 +27,7 @@
     "@adonisjs/session": "^1.0.27",
     "@adonisjs/shield": "^1.0.8",
     "adonis-recaptcha2": "^1.2.0",
+    "axios": "^0.19.0",
     "sqlite3": "^4.1.0"
   },
   "devDependencies": {},
