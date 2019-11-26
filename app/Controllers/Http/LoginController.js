@@ -11,17 +11,18 @@ class LoginController {
         return view.render("auth/login", { users: users.rows, error });
     }
     async store({ request, response, auth, session }) {
-        const data = request.all();
+        const captcha = request.get("g-recaptcha-response");
 
-        if (data["g-recaptcha-response"] != null) {
-            console.log(Env.get("RECAPTCHA_SECRET"));
+        if (captcha) {
             let url = "https://www.google.com/recaptcha/api/siteverify";
             url = url + `?secret=${Env.get("RECAPTCHA_SECRET")}`;
-            url = url + `&response=${data["g-recaptcha-response"]}`;
+            url = url + `&response=${captcha}`;
 
             const response = await axios.post(url);
 
             if (response.data.success) {
+                const data = request.only(["username", "password"]);
+
                 try {
                     await auth.attempt(data.username, data.password);
                     return response.route("dashboard.index");
