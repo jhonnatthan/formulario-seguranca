@@ -11,7 +11,7 @@ class LoginController {
         return view.render("auth/login", { users: users.rows, error });
     }
     async store({ request, response, auth, session }) {
-        const captcha = request.get("g-recaptcha-response");
+        const { "g-recaptcha-response": captcha } = request.all();
 
         if (captcha) {
             let url = "https://www.google.com/recaptcha/api/siteverify";
@@ -28,16 +28,15 @@ class LoginController {
                     return response.route("dashboard.index");
                 } catch (error) {
                     session.put("error", "Login e/ou senha incorretos!");
-                    return response.route("login.create");
                 }
             } else {
                 session.put("error", "Captcha inválido");
-                return response.route("login.create");
             }
         } else {
             session.put("error", "Captcha inválido");
-            return response.route("login.create");
         }
+
+        return response.route("login.create");
     }
     async destroy({ response, auth }) {
         await auth.logout();

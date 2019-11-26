@@ -19,7 +19,8 @@ const providers = [
   '@adonisjs/shield/providers/ShieldProvider',
   '@adonisjs/session/providers/SessionProvider',
   '@adonisjs/auth/providers/AuthProvider',
-  'adonis-recaptcha2/providers/RecaptchaProvider'
+  'adonis-recaptcha2/providers/RecaptchaProvider',
+  '@adonisjs/mail/providers/MailProvider'
 ]
 
 /*

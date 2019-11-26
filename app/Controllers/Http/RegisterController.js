@@ -3,6 +3,7 @@
 const User = use("App/Models/User");
 const Env = use("Env");
 const axios = use("axios");
+const Mail = use("Mail");
 
 class RegisterController {
     create({ view, session }) {
@@ -10,7 +11,7 @@ class RegisterController {
         return view.render("auth/register", { error });
     }
     async store({ request, response, session }) {
-        const captcha = request.get("g-recaptcha-response");
+        const { "g-recaptcha-response": captcha } = request.all();
 
         if (captcha) {
             let url = "https://www.google.com/recaptcha/api/siteverify";
@@ -28,19 +29,26 @@ class RegisterController {
                     ]);
 
                     await User.create(data);
+
+                    await Mail.send("emails.welcome", {}, message => {
+                        message
+                            .to(data.email)
+                            .from("jhonnatthan.santos@fatec.sp.gov.br")
+                            .subject("Seja bem vindo!");
+                    });
+
                     return response.route("home.index");
                 } catch (error) {
+                    console.log(error);
                     session.put("error", "Erro ao cadastrar o usuário");
-                    return response.route("home.index");
                 }
             } else {
                 session.put("error", "Captcha inválido");
-                return response.route("home.index");
             }
         } else {
             session.put("error", "Captcha inválido");
-            return response.route("home.index");
         }
+        return response.route("register.create");
     }
 }
 
