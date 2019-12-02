@@ -20,10 +20,10 @@ Route.group("home", () => {
     Route.get("/", "HomeController.index").as("home.index");
 
     Route.get("/login", "LoginController.create").as("login.create");
-    Route.post("/login", "LoginController.store").as("login.store").middleware(['recaptcha']);
+    Route.post("/login", "LoginController.store").as("login.store");
 
     Route.get("/register", "RegisterController.create").as("register.create");
-    Route.post("/register", "RegisterController.store").as("register.store").middleware(['recaptcha']);
+    Route.post("/register", "RegisterController.store").as("register.store");
 }).middleware("checkUnauth");
 
 Route.group("auth", () => {
