@@ -8,7 +8,8 @@ const Mail = use("Mail");
 class RegisterController {
     create({ view, session }) {
         const error = session.pull("error");
-        return view.render("auth/register", { error });
+        const success = session.pull("success");
+        return view.render("auth/register", { error, success });
     }
     async store({ request, response, session }) {
         const { "g-recaptcha-response": captcha } = request.all();
@@ -28,17 +29,36 @@ class RegisterController {
                         "password"
                     ]);
 
-                    await User.create(data);
+                    const user = await User.create(data);
 
-                    await Mail.send("emails.welcome", {}, message => {
-                        message
-                            .to(data.email)
-                            .from("jhonnatthan.santos@fatec.sp.gov.br")
-                            .subject("Seja bem vindo!");
-                    });
+                    try {
+                        await Mail.send(
+                            "emails.welcome",
+                            user.toJSON(),
+                            message => {
+                                message
+                                    .to(user.email)
+                                    .from(Env.get("MAIL_USERNAME"))
+                                    .subject("Seja bem vindo!");
+                            }
+                        );
+                    } catch (error) {
+                        console.log(
+                            "--------------------------- E-mail error ---------------------------"
+                        );
+                        console.log(error);
 
-                    return response.route("home.index");
+                        session.put(
+                            "error",
+                            "Erro ao enviar e-mail de cadastro"
+                        );
+                    }
+
+                    session.put("success", "Usuário cadastrado com sucesso");
                 } catch (error) {
+                    console.log(
+                        "--------------------------- Cadastrar usuário ---------------------------"
+                    );
                     console.log(error);
                     session.put("error", "Erro ao cadastrar o usuário");
                 }
