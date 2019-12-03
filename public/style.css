@@ -6,7 +6,7 @@ body {
     background-image: url("/splash.png");
     background-color: #220052;
     background-repeat: repeat-x;
-    -webkit-animation: rodaroda 20s linear infinite alternate;
+    -webkit-animation: spaceeffect 20s linear infinite alternate;
 }
 
 * {
@@ -31,14 +31,12 @@ main {
     box-shadow: -5px 5px 8px -1px rgba(0, 0, 0, 0.39);
 }
 
-@-webkit-keyframes rodaroda {
+@-webkit-keyframes spaceeffect {
     from {
-        transform: scale(0.98);
         background-position-x: 0%;
         background-size: 80%;
     }
     to {
-        transform: scale(1);
         background-position-x: 100%;
         background-size: 90%;
     }
