@@ -32,16 +32,12 @@ class RegisterController {
                     const user = await User.create(data);
 
                     try {
-                        await Mail.send(
-                            "emails.welcome",
-                            user.toJSON(),
-                            message => {
-                                message
-                                    .to(user.email)
-                                    .from(Env.get("MAIL_USERNAME"))
-                                    .subject("Seja bem vindo!");
-                            }
-                        );
+                        await Mail.send("emails.welcome", { user }, message => {
+                            message
+                                .to(user.email)
+                                .from(Env.get("MAIL_USERNAME"))
+                                .subject("Seja bem vindo!");
+                        });
                     } catch (error) {
                         console.log(
                             "--------------------------- E-mail error ---------------------------"
