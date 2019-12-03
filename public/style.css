@@ -6,7 +6,7 @@ body {
     background-image: url("/splash.png");
     background-color: #220052;
     background-repeat: repeat-x;
-    -webkit-animation: rodaroda 10s linear infinite alternate;
+    -webkit-animation: rodaroda 20s linear infinite alternate;
 }
 
 * {
